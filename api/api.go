@@ -76,16 +76,15 @@ func (s *Server) handleUserAKey(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err := json.NewDecoder(r.Body).Decode(&req)
-
 	if err != nil {
 		kit.ErrBadRequest(w)
 		return
 	}
 
 	exchangeUuid, err := database.MakeNewExchange(s.db, req.B64KeyUserA)
-
 	if err != nil {
-		panic(err)
+		kit.ErrInternal(w)
+		return
 	}
 
 	resp.ExchangeUuid = exchangeUuid
@@ -107,9 +106,9 @@ func (s *Server) handleUserBKey(w http.ResponseWriter, r *http.Request) {
 	}
 
 	keyUserA, err := database.UserBSwapKey(s.db, req.ExchangeUuid, req.B64KeyUserB)
-
 	if err != nil {
-		panic(err)
+		kit.ErrInternal(w)
+		return
 	}
 
 	resp.B64KeyUserA = keyUserA
@@ -135,9 +134,9 @@ func (s *Server) handleFinishExchange(w http.ResponseWriter, r *http.Request) {
 	}
 
 	keyUserB, err := database.FinishExchange(s.db, req.ExchangeUuid)
-
 	if err != nil {
-		panic(err)
+		kit.ErrInternal(w)
+		return
 	}
 
 	resp.B64KeyUserB = keyUserB
