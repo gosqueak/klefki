@@ -69,10 +69,10 @@ func (s *Server) handleExchange(w http.ResponseWriter, r *http.Request) {
 // This handler is for A to start an exchange with her public key.
 func (s *Server) handleUserAKey(w http.ResponseWriter, r *http.Request) {
 	var req struct {
-		B64KeyUserA string `json:"b64KeyUserA"`
+		B64KeyUserA string `json:"k"`
 	}
 	var resp struct {
-		ExchangeUuid string `json:"exchangeUuid"`
+		ExchangeUuid string `json:"e"`
 	}
 
 	err := json.NewDecoder(r.Body).Decode(&req)
@@ -98,11 +98,11 @@ func (s *Server) handleUserAKey(w http.ResponseWriter, r *http.Request) {
 // handler for updating an exchange with B's public key.
 func (s *Server) handleUserBKey(w http.ResponseWriter, r *http.Request) {
 	var req struct {
-		ExchangeUuid string `json:"exchangeUuid"`
-		B64KeyUserB  string `json:"b64KeyUserB"`
+		ExchangeUuid string `json:"e"`
+		B64KeyUserB  string `json:"b"`
 	}
 	var resp struct {
-		B64KeyUserA string `json:"b64KeyUserA"`
+		B64KeyUserA string `json:"a"`
 	}
 
 	keyUserA, err := database.UserBSwapKey(s.db, req.ExchangeUuid, req.B64KeyUserB)
@@ -122,10 +122,10 @@ func (s *Server) handleUserBKey(w http.ResponseWriter, r *http.Request) {
 // handler for A to download B's key and finally delete the exchange.
 func (s *Server) handleFinishExchange(w http.ResponseWriter, r *http.Request) {
 	var req struct {
-		ExchangeUuid string `json:"exchangeUuid"`
+		ExchangeUuid string `json:"u"`
 	}
 	var resp struct {
-		B64KeyUserB string `json:"b64KeyUserB"`
+		B64KeyUserB string `json:"b"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
