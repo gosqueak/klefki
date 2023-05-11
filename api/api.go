@@ -61,7 +61,7 @@ func (s *Server) handleExchange(w http.ResponseWriter, r *http.Request) {
 		s.handleUserAKey(w, r)
 	case http.MethodPatch:
 		s.handleUserBKey(w, r)
-	case http.MethodGet:
+	case http.MethodDelete:
 		s.handleFinishExchange(w, r)
 	}
 }
