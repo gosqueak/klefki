@@ -2,19 +2,20 @@ package main
 
 import (
 	"crypto/rsa"
+	"os"
 
 	kit "github.com/gosqueak/apikit"
 	"github.com/gosqueak/jwt"
-	"github.com/gosqueak/leader/team"
 	"github.com/gosqueak/jwt/rs256"
 	"github.com/gosqueak/klefki/api"
 	"github.com/gosqueak/klefki/database"
+	"github.com/gosqueak/leader/team"
 )
 
 
 
 func main() {
-	tm := team.Download("https://raw.githubusercontent.com/gosqueak/leader/main/Teamfile.json")
+	tm := team.Download(os.Getenv("TEAMFILE_JSON_URL"))
 	klefki := tm["klefki"]
 	steelix := tm["steelix"]
 
