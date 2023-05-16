@@ -7,8 +7,6 @@ RUN go mod download
 
 COPY . .
 
-WORKDIR /app/cmd
+RUN make dev
 
-RUN go build -o main .
-
-CMD ["./main"]
+CMD ["go run .cmd/main.go"]
