@@ -13,9 +13,10 @@ import (
 )
 
 func main() {
-	tm := team.Download(os.Getenv("TEAMFILE_JSON_URL"))
-	klefki := tm["klefki"]
-	steelix := tm["steelix"]
+	tm := team.Download(os.Getenv("TEAMFILE_URL"))
+
+	klefki := tm.Member("klefki")
+	steelix := tm.Member("steelix")
 
 	db := database.Load("data.sqlite")
 
