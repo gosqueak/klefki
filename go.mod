@@ -6,6 +6,6 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/gosqueak/apikit v0.0.0-20230512061655-69436fe1a189
 	github.com/gosqueak/jwt v0.0.0-20230510165842-1b5cd2f15c4b
-	github.com/gosqueak/leader v0.0.0-20230516182839-0e5d618b2c1b
+	github.com/gosqueak/leader v0.0.0-20230517164329-a629fcaf0fe9
 	github.com/mattn/go-sqlite3 v1.14.16
 )
