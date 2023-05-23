@@ -75,20 +75,20 @@ func (s *Server) handleUserAKey(w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		kit.ErrBadRequest(w)
+		kit.Error(w, "could not decode JSON body", http.StatusBadRequest)
 		return
 	}
 
 	exchangeUuid, err := database.MakeNewExchange(s.db, req.B64KeyUserA)
 	if err != nil {
-		kit.ErrInternal(w)
+		kit.Error(w, "", http.StatusInternalServerError)
 		return
 	}
 
 	resp.ExchangeUuid = exchangeUuid
 
 	if err = json.NewEncoder(w).Encode(resp); err != nil {
-		kit.ErrInternal(w)
+		kit.Error(w, "", http.StatusInternalServerError)
 		return
 	}
 }
@@ -105,14 +105,14 @@ func (s *Server) handleUserBKey(w http.ResponseWriter, r *http.Request) {
 
 	keyUserA, err := database.UserBSwapKey(s.db, req.ExchangeUuid, req.B64KeyUserB)
 	if err != nil {
-		kit.ErrInternal(w)
+		kit.Error(w, "", http.StatusInternalServerError)
 		return
 	}
 
 	resp.B64KeyUserA = keyUserA
 
 	if err := json.NewEncoder(w).Encode(resp); err != nil {
-		kit.ErrInternal(w)
+		kit.Error(w, "", http.StatusInternalServerError)
 		return
 	}
 }
@@ -127,20 +127,20 @@ func (s *Server) handleFinishExchange(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		kit.ErrBadRequest(w)
+		kit.Error(w, "could not decode JSON body", http.StatusBadRequest)
 		return
 	}
 
 	keyUserB, err := database.FinishExchange(s.db, req.ExchangeUuid)
 	if err != nil {
-		kit.ErrInternal(w)
+		kit.Error(w, "", http.StatusInternalServerError)
 		return
 	}
 
 	resp.B64KeyUserB = keyUserB
 
 	if err = json.NewEncoder(w).Encode(resp); err != nil {
-		kit.ErrInternal(w)
+		kit.Error(w, "", http.StatusInternalServerError)
 		return
 	}
 }
