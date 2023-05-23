@@ -44,10 +44,8 @@ func NewServer(addr string, db *sql.DB, aud jwt.Audience) *Server {
 func (s *Server) Run() {
 	http.HandleFunc(
 		"/", kit.LogMiddleware(
-			kit.CorsMiddleware(
-				kit.CookieTokenMiddleware(
-					s.aud.Name, s.aud, s.handleExchange,
-				),
+			kit.CookieTokenMiddleware(
+				s.aud.Name, s.aud, s.handleExchange,
 			),
 		),
 	)

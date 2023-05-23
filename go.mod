@@ -9,3 +9,9 @@ require (
 	github.com/gosqueak/leader v0.0.0-20230517164329-a629fcaf0fe9
 	github.com/mattn/go-sqlite3 v1.14.16
 )
+
+replace github.com/gosqueak/apikit => ../apikit
+
+replace github.com/gosqueak/jwt => ../jwt
+
+replace github.com/gosqueak/leader => ../leader

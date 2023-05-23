@@ -18,7 +18,7 @@ func Load(fp string) *sql.DB {
 		CREATE TABLE IF NOT EXISTS exchange (
 			uuid TEXT NOT NULL,
 			keyUserA TEXT UNIQUE NOT NULL,
-			keyUserB TEXT UNIQUE,
+			keyUserB TEXT UNIQUE
 		);
 		CREATE INDEX IF NOT EXISTS indexExchangeUuid on exchange(uuid);
 	`)
