@@ -43,11 +43,7 @@ func NewServer(addr string, db *sql.DB, aud jwt.Audience) *Server {
 
 func (s *Server) Run() {
 	http.HandleFunc(
-		"/", kit.LogMiddleware(
-			kit.CookieTokenMiddleware(
-				s.aud.Name, s.aud, s.handleExchange,
-			),
-		),
+		"/", kit.LogMiddleware(kit.TokenMiddleware(kit.CookieNameAPIToken, s.aud, s.handleExchange)),
 	)
 	// start serving
 	log.Fatal(http.ListenAndServe(s.addr, nil))
