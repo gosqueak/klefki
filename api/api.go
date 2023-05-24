@@ -27,6 +27,7 @@ import (
 	"net/http"
 
 	kit "github.com/gosqueak/apikit"
+	middlew "github.com/gosqueak/apikit/middleware"
 	"github.com/gosqueak/jwt"
 	"github.com/gosqueak/klefki/database"
 )
@@ -43,7 +44,7 @@ func NewServer(addr string, db *sql.DB, aud jwt.Audience) *Server {
 
 func (s *Server) Run() {
 	http.HandleFunc(
-		"/", kit.LogMiddleware(kit.TokenMiddleware(kit.CookieNameAPIToken, s.aud, s.handleExchange)),
+		"/", middlew.Log(middlew.CheckToken(kit.CookieNameAPIToken, s.aud, s.handleExchange)),
 	)
 	// start serving
 	log.Fatal(http.ListenAndServe(s.addr, nil))
